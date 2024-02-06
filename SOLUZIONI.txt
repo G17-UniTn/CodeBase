@@ -1,0 +1,89 @@
+// SOLUZIONE DEI PROBLEMI APPLICATIVO SLEEPCODE
+
+// PROBLEMA TWO-SUM O(n)
+function TwoSum(nums,target) {
+    let map = new Map();
+    
+    for(let i = 0; i < nums.length; i ++) {
+        if(map.has(target - nums[i])) {
+            return [map.get(target - nums[i]), i];
+        } else {
+            map.set(nums[i], i);
+        }
+    }
+	return [];
+}
+
+
+//PROBLEMA REVERSE LINKED LIST
+function reverseLinkedList(head) {
+    let [prev, current] = [null, head]
+    while(current) {
+        [current.next, prev, current] = [prev, current, current.next]
+    }
+    return prev
+  };
+
+
+//PROBLEMA JUMP-GAME O(n)
+function canJump(nums) {
+  if(nums.length <= 1)
+        return true;
+    // To keep the maximum index that can be reached...
+    let maximum = nums[0];
+    // Traverse all the elements through loop...
+    for(let i = 0; i < nums.length; i++){
+        //if there is no way to jump to next...
+        // so we should return false...
+        if(maximum <= i && nums[i] == 0) 
+            return false;
+        //update the maximum jump...    
+        if(i + nums[i] > maximum){
+            maximum = i + nums[i];
+        }
+        //maximum is enough to reach the end...
+        if(maximum >= nums.length-1) 
+            return true;
+    }
+    return false;   
+};
+
+//PROBLEMA VALID PARENTHESES
+function validParentheses(s) {
+  let stack = []; 
+    for (let c of s) { 
+        if (c === '(' || c === '{' || c === '[') { 
+            stack.push(c); 
+        } else { 
+            if (!stack.length ||  
+                (c === ')' && stack[stack.length - 1] !== '(') ||
+                (c === '}' && stack[stack.length - 1] !== '{') ||
+                (c === ']' && stack[stack.length - 1] !== '[')) {
+                return false; 
+            }
+            stack.pop();
+        }
+    }
+    return !stack.length;
+                          
+};
+
+//PROBLEMA SEARCH A 2D MATRIX
+function searchMatrix(matrix, target) {
+  let m = matrix.length;
+    let n = matrix[0].length;
+    let left = 0, right = m * n - 1;
+
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        let mid_val = matrix[Math.floor(mid / n)][mid % n];
+
+        if (mid_val === target)
+            return true;
+        else if (mid_val < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return false;
+};
